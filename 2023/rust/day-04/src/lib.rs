@@ -27,15 +27,50 @@ pub fn process_part1(input: &str) -> String {
         if matches != -1 {
             let base: i32 = 2;
             total += base.pow(matches as u32);
-            dbg!(&matches, &total);
         }
     }
 
     total.to_string()
 }
 
-pub fn process_part2(_input: &str) -> String {
-    "Implement part 2".to_string()
+pub fn process_part2(input: &str) -> String {
+    let mut data: Vec<(u32, (Vec<u32>, Vec<u32>))> = input
+        .lines()
+        .map(|line| {
+            let halves: Vec<&str> = line.split('|').collect();
+            let left_all: Vec<&str> = halves[0].split(':').collect();
+            let id: u32= left_all[0]
+                .split_whitespace()
+                .last().unwrap()
+                .parse().unwrap();
+            let left: Vec<u32> = left_all[1]
+                .split_whitespace()
+                .map(|num| num.parse().unwrap())
+                .collect();
+            let right: Vec<u32> = halves[1]
+                .split_whitespace()
+                .map(|num| num.parse().unwrap())
+                .collect();
+            (id, (left, right))
+        }).collect();
+
+    let mut idx = 0;
+
+    while idx < data.len() {
+        let mut matches = 0;
+        for num in &data[idx].1 .0 {
+            if data[idx].1 .1.contains(&num) {
+                matches += 1;
+            }
+        }
+
+        for n in 1..=matches {
+            let new_idx = (data[idx].0 + n - 1) as usize;
+            data.push(data[new_idx].clone());
+        }
+        idx += 1;
+    }
+    data.len().to_string()
 }
 
 #[cfg(test)]
@@ -58,7 +93,7 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11";
     #[test]
     fn test_part2() {
         let result = process_part2(INPUT);
-        assert_eq!(result, "");
+        assert_eq!(result, "30");
     }
 }
 
