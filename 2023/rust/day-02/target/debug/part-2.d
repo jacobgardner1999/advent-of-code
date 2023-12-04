@@ -1,1 +1,0 @@
-/Users/jacobgardner/Documents/coding/advent-of-code/2023/rust/day-02/target/debug/part-2: /Users/jacobgardner/Documents/coding/advent-of-code/2023/rust/day-02/src/bin/part-2.rs /Users/jacobgardner/Documents/coding/advent-of-code/2023/rust/day-02/src/lib.rs
